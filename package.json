@@ -1,0 +1,24 @@
+{
+  "name": "efid-live-monitor",
+  "version": "1.0.0",
+  "description": "A Live Monitor For EFID Pages, Testing the functions of the pages.",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumalee/efid-live-monitor.git"
+  },
+  "keywords": [
+    "monitor"
+  ],
+  "author": "kumalee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kumalee/efid-live-monitor/issues"
+  },
+  "homepage": "https://github.com/kumalee/efid-live-monitor#readme",
+  "dependencies": {
+    "chai": "^3.5.0"
+  }
+}
