@@ -2,9 +2,9 @@ var URI = require('urijs');
 var runner = require('../runner');
 require('../keychain');
 
-runner(function(param){
-  suite('account login page', function() {
-    var login_url;
+runner(function(param, directory){
+  suite(`account login page - ${directory}`, function() {
+    var login_url, providers = [];
 
     setup(function *() {
       if(!login_url){
@@ -12,8 +12,8 @@ runner(function(param){
           .url(param.init_url)
           .waitForVisible(param.btn_signin, 30e3)
           .click(param.btn_signin)
-          .waitForVisible(param.btn_submit)
-          .getUrl()
+          .waitForVisible(param.btn_submit, 30e3)
+          .getUrl();
         return assert.notInclude(yield browser
           .getAttribute(param.btn_submit, 'class'), 'disabled',
           'check form submit button is available');
@@ -21,7 +21,7 @@ runner(function(param){
       else {
         return assert.notInclude(yield browser
             .url(login_url)
-            .waitForEnabled(param.btn_submit)
+            .waitForEnabled(param.btn_submit, 30e3)
             .getAttribute(param.btn_submit, 'class'), 'disabled',
             'check form submit button is available');
       }
@@ -29,14 +29,16 @@ runner(function(param){
 
     test('check the links to register and reset page', function *() {
       var continue_uri = URI(login_url).search(true).continue_uri;
+      providers_str =  URI(continue_uri).search(true).providers;
+      if (providers_str) {
+        providers = providers_str.split(',');
+      }
       var selector = 'a#link-to-register, a#link-to-reset';
       var $els = yield browser.getAttribute(selector, 'href');
       assert.sameMembers($els.map(function (href) {
         var link = URI(href);
         assert.equal(link.search(true).continue_uri, continue_uri,
             '"continue_uri" should inherit from current page');
-        console.log(link.relativeTo(login_url).search('').toString());
-        console.log(param.login.relative_to_links);
         return link.relativeTo(login_url).search('').toString();
       }), param.login.relative_to_links, 'check links are correct');
     });
@@ -66,47 +68,56 @@ runner(function(param){
         .submitForm('form')
         .waitForVisible(param.login_success)
         .getText(param.login_success),
-        'FOO BAR'
+        param.login_text
       );
     });
 
     test('facebook login succeed', function *() {
-      return assert.equal(yield browser
-        .waitForVisible('#social-login-facebook')
-        .click('#social-login-facebook')
-        .waitForVisible('#email')
-        .fill_facebook_login_valid()
-        .submitForm('form')
-        .waitForVisible(param.login_success)
-        .getText(param.login_success),
-        'FOO BAR'
-      );
+      if('facebook' in providers) {
+        return assert.equal(yield browser
+          .waitForVisible('#social-login-facebook')
+          .click('#social-login-facebook')
+          .waitForVisible(param['facebook'])
+          .fill_facebook_login_valid()
+          .submitForm('form')
+          .waitForVisible(param.login_success)
+          .getText(param.login_success),
+          param.login_texts);
+      } else {
+        return true;
+      }
     });
 
     test('linkedin login succeed', function *() {
-      return assert.equal(yield browser
-        .waitForVisible('#social-login-linkedin')
-        .click('#social-login-linkedin')
-        .waitForVisible('a[href*="http://www.linkedin.com"]')
-        .fill_linkedin_login_valid()
-        .submitForm('form')
-        .waitForVisible(param.login_success)
-        .getText(param.login_success),
-        'FOO BAR'
-      );
+      if('linkedin' in providers) {
+        return assert.equal(yield browser
+          .waitForVisible('#social-login-linkedin')
+          .click('#social-login-linkedin')
+          .waitForVisible(param['linkedin'])
+          .fill_linkedin_login_valid()
+          .submitForm('form')
+          .waitForVisible(param.login_success)
+          .getText(param.login_success),
+          param.login_text);
+      } else {
+        return true;
+      }
     });
 
     test('google+ login succeed', function *() {
-      return assert.equal(yield browser
-        .waitForVisible('#social-login-google')
-        .click('#social-login-google')
-        .waitForVisible('#Email')
-        .fill_google_login_valid()
-        .submitForm('form')
-        .waitForVisible(param.login_success)
-        .getText(param.login_success),
-        'FOO BAR'
-      );
+      if('google' in providers) {
+        return assert.equal(yield browser
+          .waitForVisible('#social-login-google')
+          .click('#social-login-google')
+          .waitForVisible(param['google'])
+          .fill_google_login_valid()
+          .submitForm('form')
+          .waitForVisible(param.login_success)
+          .getText(param.login_success),
+          param.login_text);
+      } else {
+        return true;
+      }
     });
   });
 });

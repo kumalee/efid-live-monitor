@@ -1,8 +1,13 @@
 "use strict";
 
-var directories = ['efset'];
+var directories = ['efset', 'ui'];
 var relative_pages = ['register', 'reset', 'login'];
 var pages = ['login', 'register', 'password', 'reset', 'verify'];
+var providers = {
+  'facebook': '#email',
+  'linkedin': 'a[href*="http://www.linkedin.com"]',
+  'google': '#Email'
+};
 var languages = ['en'];
 var params = [];
 
@@ -13,6 +18,10 @@ directories.forEach( function(directory, i){
     var relative_to_links = [];
     relative_pages.forEach( function(page, i){
       relative_to_links.push(`../${page}/index.html`);
+    });
+
+    ['facebook', 'linkedin', 'google'].forEach(function(provider){
+      entity[lang][provider] = providers[provider];
     });
     pages.forEach( function(page, i){
       entity[lang][page] = {};
@@ -37,7 +46,7 @@ directories.forEach( function(directory, i){
       }
       else if (directory == 'ui') {
         entity[lang]['init_url'] = 'https://classroom.ctx.ef.com';
-        entity[lang]['btn_signin'] = 'auth-provider-btn primary';
+        entity[lang]['btn_signin'] = '.auth-provider-btn.primary';
         entity[lang]['btn_submit'] = 'button[type="submit"]';
         entity[lang]['login_success'] = '.welcome-msg';
         entity[lang]['login_text'] = 'Welcome to EF Class';
@@ -51,7 +60,7 @@ module.exports = function runner(spec) {
   "use strict";
   directories.forEach( function(directory, i1) {
     languages.forEach( function(lang, i2) {
-      spec(params[directory][lang]);
+      spec(params[directory][lang], directory);
     });
   });
 };
