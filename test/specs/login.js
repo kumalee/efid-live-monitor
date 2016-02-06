@@ -1,6 +1,8 @@
 var URI = require('urijs');
 var runner = require('../runner');
 require('../keychain');
+var _ = require('lodash');
+
 
 runner(function(param, directory){
   suite(`account login page - ${directory}`, function() {
@@ -68,55 +70,54 @@ runner(function(param, directory){
         .submitForm('form')
         .waitForVisible(param.login_success)
         .getText(param.login_success),
-        param.login_text
-      );
+        param.login_text);
     });
 
     test('facebook login succeed', function *() {
-      if('facebook' in providers) {
+      if(_.includes(providers, 'facebook')) {
         return assert.equal(yield browser
-          .waitForVisible('#social-login-facebook')
-          .click('#social-login-facebook')
-          .waitForVisible(param['facebook'])
+          .waitForVisible(param['facebook'].button)
+          .click(param['facebook'].button)
+          .waitForVisible(param['facebook'].input)
           .fill_facebook_login_valid()
           .submitForm('form')
           .waitForVisible(param.login_success)
           .getText(param.login_success),
-          param.login_texts);
+          param.login_text);
       } else {
-        return true;
+        this.skip();
       }
     });
 
     test('linkedin login succeed', function *() {
-      if('linkedin' in providers) {
+      if(_.includes(providers,'linkedin')) {
         return assert.equal(yield browser
-          .waitForVisible('#social-login-linkedin')
-          .click('#social-login-linkedin')
-          .waitForVisible(param['linkedin'])
+          .waitForVisible(param['linkedin'].button)
+          .click(param['linkedin'].button)
+          .waitForVisible(param['linkedin'].input)
           .fill_linkedin_login_valid()
           .submitForm('form')
           .waitForVisible(param.login_success)
           .getText(param.login_success),
           param.login_text);
       } else {
-        return true;
+        this.skip();
       }
     });
 
-    test('google+ login succeed', function *() {
-      if('google' in providers) {
+    test('google login succeed', function *() {
+      if(_.includes(providers,'google')) {
         return assert.equal(yield browser
-          .waitForVisible('#social-login-google')
-          .click('#social-login-google')
-          .waitForVisible(param['google'])
+          .waitForVisible(param['google'].button)
+          .click(param['google'].button)
+          .waitForVisible(param['google'].input)
           .fill_google_login_valid()
           .submitForm('form')
           .waitForVisible(param.login_success)
           .getText(param.login_success),
           param.login_text);
       } else {
-        return true;
+        this.skip();
       }
     });
   });

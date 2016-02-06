@@ -21,7 +21,10 @@ directories.forEach( function(directory, i){
     });
 
     ['facebook', 'linkedin', 'google'].forEach(function(provider){
-      entity[lang][provider] = providers[provider];
+      entity[lang][provider] = {
+        'button': `#social-login-${provider}`,
+        'input': providers[provider]
+      }
     });
     pages.forEach( function(page, i){
       entity[lang][page] = {};
