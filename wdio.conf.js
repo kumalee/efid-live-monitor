@@ -49,7 +49,6 @@ exports.config = {
     capabilities: [
       {
         name: "EFID Live Monitor",
-        name: "EFID Live Monitor",
         public: "public",
         tags: ["efid", "live", "monitor"],
         build: 37,
