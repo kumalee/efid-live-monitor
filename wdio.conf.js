@@ -48,6 +48,15 @@ exports.config = {
     //
     capabilities: [
       {
+        name: "EFID Live Monitor",
+        name: "EFID Live Monitor",
+        public: "public",
+        tags: ["efid", "live", "monitor"],
+        build: 37,
+        customData: {
+            "release": "Release/1.0.34",
+            "server": "Travis CI"
+        },
         browserName: 'chrome'
       }
     ],
