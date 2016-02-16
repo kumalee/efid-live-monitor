@@ -31,7 +31,7 @@ runner(function(param, directory){
       } else {
         this.skip();
       }
-    })
+    });
 
     setup(function *() {
       return assert.notInclude(yield browser

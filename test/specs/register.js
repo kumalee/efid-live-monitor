@@ -20,6 +20,21 @@ runner(function(param, directory){
       return assert.ok(signup_url);
     });
 
+    suiteTeardown(function *(){
+      if (param.teardown_visible){
+        var href = yield browser
+          .url(param.init_url)
+          .waitForVisible(param.teardown_visible)
+          .moveToObject(param.teardown_visible)
+          .click(param.teardown_click)
+          .waitForVisible(param.btn_signin)
+          .getAttribute(param.btn_signin, 'href');
+        return assert.ok(href);
+      } else {
+        this.skip();
+      }
+    });
+
     setup(function *() {
       return assert.notInclude(yield browser
           .url(signup_url)
