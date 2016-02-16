@@ -25,8 +25,8 @@ runner(function(param, directory){
           .waitForVisible(param.teardown_visible)
           .moveToObject(param.teardown_visible)
           .click(param.teardown_click)
-          .waitForVisible(param.teardown_visible)
-          .getAttribute(param.teardown_click, 'href');
+          .waitForVisible(param.btn_signin)
+          .getAttribute(param.btn_signin, 'href');
         return assert.ok(href);
       } else {
         this.skip();
