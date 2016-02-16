@@ -8,27 +8,24 @@ runner(function(param, directory){
   suite(`account register page - ${directory}`, function() {
     var signup_url, providers = [];
 
+    suiteSetup(function *(){
+      signup_url = yield browser
+        .url(param.init_url)
+        .waitForVisible(param.btn_signin, 30e3)
+        .click(param.btn_signin)
+        .waitForVisible(param.btn_submit, 30e3)
+        .click(param.btn_signup)
+        .waitForVisible('#link-to-login', 30e3)
+        .getUrl();
+      return assert.ok(signup_url);
+    });
+
     setup(function *() {
-      if(!signup_url){
-        signup_url = yield browser
-          .url(param.init_url)
-          .waitForVisible(param.btn_signin, 30e3)
-          .click(param.btn_signin)
-          .waitForVisible(param.btn_submit, 30e3)
-          .click(param.btn_signup)
-          .waitForVisible('#link-to-login', 30e3)
-          .getUrl();
-        return assert.notInclude(yield browser
+      return assert.notInclude(yield browser
+          .url(signup_url)
+          .waitForEnabled(param.btn_submit, 30e3)
           .getAttribute(param.btn_submit, 'class'), 'disabled',
           'check form submit button is available');
-      }
-      else {
-        return assert.notInclude(yield browser
-            .url(signup_url)
-            .waitForEnabled(param.btn_submit, 30e3)
-            .getAttribute(param.btn_submit, 'class'), 'disabled',
-            'check form submit button is available');
-      }
     });
 
     test('check the links to signup page', function *() {

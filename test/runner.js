@@ -47,6 +47,8 @@ directories.forEach( function(directory, i){
         entity[lang]['btn_signup'] = 'a#link-to-register';
         entity[lang]['login_success'] = '.hidden-xs.eft-navbar ul.efid-authenticated .welcome span[data-woven*="efid"]';
         entity[lang]['login_text'] = 'FOO BAR';
+        entity[lang]['teardown_visible'] = '.hidden-xs.eft-navbar .welcome';
+        entity[lang]['teardown_click'] = '.hidden-xs.eft-navbar .welcome ul li[data-woven] a';
       }
       else if (directory == 'ui') {
         entity[lang]['init_url'] = 'https://classroom.ctx.ef.com';
