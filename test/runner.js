@@ -44,13 +44,19 @@ directories.forEach( function(directory, i){
         entity[lang]['init_url'] = 'https://www.efset.org';
         entity[lang]['btn_signin'] = '.hidden-xs.eft-navbar ul.efid-anonymous a[href*="https://accounts.ef.com/oauth2"]';
         entity[lang]['btn_submit'] = 'button[type="submit"]';
+        entity[lang]['btn_signup'] = 'a#link-to-register';
+        entity[lang]['btn_reset'] = 'a#link-to-reset';
         entity[lang]['login_success'] = '.hidden-xs.eft-navbar ul.efid-authenticated .welcome span[data-woven*="efid"]';
         entity[lang]['login_text'] = 'FOO BAR';
+        entity[lang]['teardown_visible'] = '.hidden-xs.eft-navbar .welcome';
+        entity[lang]['teardown_click'] = '.hidden-xs.eft-navbar .welcome ul li[data-woven] a';
       }
       else if (directory == 'ui') {
         entity[lang]['init_url'] = 'https://classroom.ctx.ef.com';
         entity[lang]['btn_signin'] = '.auth-provider-btn.primary';
         entity[lang]['btn_submit'] = 'button[type="submit"]';
+        entity[lang]['btn_signup'] = 'a#link-to-register';
+        entity[lang]['btn_reset'] = 'a#link-to-reset';
         entity[lang]['login_success'] = '.welcome-msg';
         entity[lang]['login_text'] = 'Welcome to EF Class';
       }

@@ -8,25 +8,37 @@ runner(function(param, directory){
   suite(`account login page - ${directory}`, function() {
     var login_url, providers = [];
 
-    setup(function *() {
-      if(!login_url){
-        login_url = yield browser
+    suiteSetup(function *(){
+      login_url = yield browser
+        .url(param.init_url)
+        .waitForVisible(param.btn_signin, 30e3)
+        .click(param.btn_signin)
+        .waitForVisible(param.btn_submit, 30e3)
+        .getUrl();
+      return assert.ok(login_url);
+    });
+
+    suiteTeardown(function *(){
+      if (param.teardown_visible){
+        var href = yield browser
           .url(param.init_url)
-          .waitForVisible(param.btn_signin, 30e3)
-          .click(param.btn_signin)
-          .waitForVisible(param.btn_submit, 30e3)
-          .getUrl();
-        return assert.notInclude(yield browser
+          .waitForVisible(param.teardown_visible)
+          .moveToObject(param.teardown_visible)
+          .click(param.teardown_click)
+          .waitForVisible(param.btn_signin)
+          .getAttribute(param.btn_signin, 'href');
+        return assert.ok(href);
+      } else {
+        this.skip();
+      }
+    });
+
+    setup(function *() {
+      return assert.notInclude(yield browser
+          .url(login_url)
+          .waitForEnabled(param.btn_submit, 30e3)
           .getAttribute(param.btn_submit, 'class'), 'disabled',
           'check form submit button is available');
-      }
-      else {
-        return assert.notInclude(yield browser
-            .url(login_url)
-            .waitForEnabled(param.btn_submit, 30e3)
-            .getAttribute(param.btn_submit, 'class'), 'disabled',
-            'check form submit button is available');
-      }
     });
 
     test('check the links to register and reset page', function *() {

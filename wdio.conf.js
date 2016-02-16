@@ -48,6 +48,14 @@ exports.config = {
     //
     capabilities: [
       {
+        name: "EFID Live Monitor",
+        public: "public",
+        tags: ["efid", "live", "monitor"],
+        build: 37,
+        customData: {
+            "release": "Release/1.0.34",
+            "server": "Travis CI"
+        },
         browserName: 'chrome'
       }
     ],
@@ -71,7 +79,7 @@ exports.config = {
     baseUrl: 'http://efid.dev',
     //
     // Default timeout for all waitForXXX commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 20000,
     //
     // Initialize the browser instance with a WebdriverIO plugin. The object should have the
     // plugin name as key and the desired plugin options as property. Make sure you have
