@@ -160,9 +160,9 @@ runner(function(param, directory){
         return assert.equal(yield browser
           .waitForVisible(param['facebook'].button)
           .click(param['facebook'].button)
-          .waitForVisible(param['facebook'].input)
-          .fill_facebook_login_valid()
-          .submitForm('form')
+          //.waitForVisible(param['facebook'].input)
+          //.fill_facebook_login_valid()
+          //.submitForm('form')
           .waitForVisible(param.login_success)
           .getText(param.login_success),
           param.login_text);
@@ -192,9 +192,9 @@ runner(function(param, directory){
         return assert.equal(yield browser
           .waitForVisible(param['google'].button)
           .click(param['google'].button)
-          .waitForVisible(param['google'].input)
-          .fill_google_login_valid()
-          .submitForm('form')
+          //.waitForVisible(param['google'].input)
+          //.fill_google_login_valid()
+          //.submitForm('form')
           .waitForVisible(param.login_success)
           .getText(param.login_success),
           param.login_text);
