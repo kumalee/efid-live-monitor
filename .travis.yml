@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-  - "4.1"
+  - "4.1.2"
 cache:
   directories:
     - node_modules
 install:
   - "cd code && npm install"
 script:
-  - "cd code && npm test"
+  - npm test
 branches:
   only:
     - master
