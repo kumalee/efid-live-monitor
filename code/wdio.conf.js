@@ -79,7 +79,7 @@ exports.config = {
     baseUrl: 'http://efid.dev',
     //
     // Default timeout for all waitForXXX commands.
-    waitforTimeout: 20000,
+    waitforTimeout: 40000,
     //
     // Initialize the browser instance with a WebdriverIO plugin. The object should have the
     // plugin name as key and the desired plugin options as property. Make sure you have
@@ -120,7 +120,7 @@ exports.config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'tdd',
-        timeout: 30e3
+        timeout: 40e3
     },
 
     //
