@@ -171,6 +171,9 @@ runner(function(param, directory){
     });
 
     test('facebook login succeed', function *() {
+      // facebook login can't be autotest because of its' robot
+      // login check
+      this.skip();
       if(_.includes(providers, 'facebook')) {
         return assert.equal(yield browser
           .waitForVisible(param['facebook'].button)
